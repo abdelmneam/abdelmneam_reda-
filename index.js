@@ -5,10 +5,8 @@ const fs = require("fs");
 
 const app = express();
 const PORT = 3000;
-
 // Multer setup
 const upload = multer({ dest: "uploads/" });
-
 // Gmail transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -17,7 +15,6 @@ const transporter = nodemailer.createTransport({
     pass: "pgqr torf ynxh bksx",          // 🔐 App Password من Google
   },
 });
-
 // Route to handle form
 app.post("/upload", upload.single("image"), async (req, res) => {
   const filePath = req.file.path;
