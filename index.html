@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="ar">
-<head>
+    <head>
   <meta charset="UTF-8">
-  <title>abdelmneam emira</title>
-    <link rel="stylesheet" href="n.css">
- <link src="index.js"></script>
+  <title>موقعي</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8D0P1NWYC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-G8D0P1NWYC');
+  </script>
+<button class="game-button">Start Game</button>
+
+  <link rel="stylesheet" href="inde.css">
+   <script src="index.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
@@ -205,7 +215,7 @@
     <td style="padding: 10px; border: 1px solid #fff;">المجال</td>
     <td style="padding: 10px; border: 1px solid #fff;">Front-end و Java</td>
   </tr>
-   <tr>
+    <tr>
     <td style="padding: 10px; border: 1px solid #fff;">العمر</td>
     <td style="padding: 10px; border: 1px solid #fff;">18</td>
   </tr>
@@ -347,12 +357,450 @@
     }
   </script>
 </body>
+    <div class="card">
+<h1>       | قسم الالعاب   |</h1>
+<div class="card">
+  <h2>لعبة حجر - ورقة - مقص ✊📄✂️</h2>
+  <p>اختر:</p>
+  <button onclick="playRPS('rock')">✊ حجر</button>
+  <button onclick="playRPS('paper')">📄 ورقة</button>
+  <button onclick="playRPS('scissors')">✂️ مقص</button>
+  <p id="rpsResult" style="margin-top: 15px; font-size: 18px;"></p>
+</div>
+
+<script>
+  function playRPS(userChoice) {
+    const choices = ['rock', 'paper', 'scissors'];
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+    let result = '';
+    if (userChoice === computerChoice) {
+      result = "🔁 تعادل! الكمبيوتر اختار نفس الشيء.";
+    } else if (
+      (userChoice === 'rock' && computerChoice === 'scissors') ||
+      (userChoice === 'paper' && computerChoice === 'rock') ||
+      (userChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+      result = `✅ فزت! الكمبيوتر اختار ${getEmoji(computerChoice)}.`;
+    } else {
+      result = `❌ خسرت! الكمبيوتر اختار ${getEmoji(computerChoice)}.`;
+    }
+
+    document.getElementById("rpsResult").textContent = result;
+  }
+
+  function getEmoji(choice) {
+    switch (choice) {
+      case 'rock': return '✊ حجر';
+      case 'paper': return '📄 ورقة';
+      case 'scissors': return '✂️ مقص';
+    }
+  }
+</script>
+
+<div class="card"></div>
+  <h2>لعبة تخمين الرقم 🎯</h2>
+  <p>تم اختيار رقم بين 1 و 100، حاول تخمينه!</p>
+  <input type="number" id="guessInput" placeholder="ادخل رقمك" min="1" max="100" style="padding: 10px; font-size: 16px;">
+  <button onclick="checkGuess()" style="padding: 10px 20px; font-size: 16px; background-color: #ffc400; color: black; border: none; border-radius: 8px; cursor: pointer;">تحقق</button>
+  <p id="guessMessage" style="margin-top: 15px; font-size: 18px;"></p>
+  <button onclick="resetGuessGame()" style="margin-top: 10px; padding: 8px 16px; font-size: 15px; background-color: #ff5050; color: white; border: none; border-radius: 8px;">إعادة اللعب</button>
+</div>
+<script>
+  let secretNumber = Math.floor(Math.random() * 100) + 1;
+  let attempts = 0;
+
+  function checkGuess() {
+    const userGuess = Number(document.getElementById("guessInput").value);
+    const message = document.getElementById("guessMessage");
+
+    if (!userGuess || userGuess < 1 || userGuess > 100) {
+      message.textContent = "❌ من فضلك أدخل رقم بين 1 و 100.";
+      return;
+    }
+
+    attempts++;
+
+    if (userGuess === secretNumber) {
+      message.textContent = `🎉 صحيح! الرقم هو ${secretNumber}، عدد المحاولات: ${attempts}`;
+    } else if (userGuess > secretNumber) {
+      message.textContent = "📉 الرقم أقل من ذلك.";
+    } else {
+      message.textContent = "📈 الرقم أكبر من ذلك.";
+    }
+  }
+
+  function resetGuessGame() {
+    secretNumber = Math.floor(Math.random() * 100) + 1;
+    attempts = 0;
+    document.getElementById("guessMessage").textContent = "";
+    document.getElementById("guessInput").value = "";
+  }
+</script>
+<div class="card">
+  <h2>لعبة الجمع السريع ➕</h2>
+  <p id="mathQuestion">...</p>
+  <input type="number" id="mathAnswer" placeholder="اكتب الناتج">
+  <button onclick="checkMath()">تحقق</button>
+  <p id="mathFeedback"></p>
+</div>
+
+<script>
+  let a, b;
+
+  function generateQuestion() {
+    a = Math.floor(Math.random() * 50) + 1;
+    b = Math.floor(Math.random() * 50) + 1;
+    document.getElementById("mathQuestion").textContent = `كم حاصل: ${a} + ${b} ؟`;
+    document.getElementById("mathAnswer").value = '';
+    document.getElementById("mathFeedback").textContent = '';
+  }
+
+  function checkMath() {
+    const userAnswer = parseInt(document.getElementById("mathAnswer").value);
+    const correct = a + b;
+    const feedback = document.getElementById("mathFeedback");
+
+    if (userAnswer === correct) {
+      feedback.textContent = "✅ إجابة صحيحة!";
+    } else {
+      feedback.textContent = `❌ خطأ، الإجابة الصحيحة هي: ${correct}`;
+    }
+
+    setTimeout(generateQuestion, 2000);
+  }
+
+  generateQuestion();
+</script>
+
+<div class="card">
+  <h2>لعبة نعم أو لا 🎯</h2>
+  <p id="ynQuestion">هل تحب البرمجة؟</p>
+  <button onclick="answerYes()">نعم ✅</button>
+  <button onclick="answerNo()">لا ❌</button>
+  <p id="ynFeedback"></p>
+</div>
+
+<script>
+  const questions = [
+    "هل تحب البرمجة؟",
+    "هل تحب ألعاب الفيديو؟",
+    "هل تتمنى أن تصبح مبرمج محترف؟",
+    "هل تحب الدراسة؟",
+    "هل تستمتع بتطوير المواقع؟",
+    "هل جربت لغة Java؟",
+    "هل تحب الرياضيات؟"
+  ];
+
+  const yesReplies = [
+    "👍 ممتاز! استمر في ذلك.",
+    "😎 واضح انك مهندس",
+    "🔥 جدع"
+  ];
+
+  const noReplies = [
+    "ليه بس كدا يا فنان ",
+    " ماشي ",
+    "🤷‍♂️ الحمدلله شيلنا من المجال شخص مبيفهمش"
+  ];
+
+  function getRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function answerYes() {
+    document.getElementById("ynFeedback").textContent = getRandom(yesReplies);
+    nextQuestion();
+  }
+
+  function answerNo() {
+    document.getElementById("ynFeedback").textContent = getRandom(noReplies);
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    setTimeout(() => {
+      const question = getRandom(questions);
+      document.getElementById("ynQuestion").textContent = question;
+      document.getElementById("ynFeedback").textContent = '';
+    }, 2000);
+  }
+</script>
+
+<div class="card">
+  <h2>اختبر سرعتك ⏱️</h2>
+  <button id="clickBtn" onclick="countClick()" disabled>اضغط بسرعة!</button>
+  <p id="clicks">النتيجة: 0</p>
+  <button onclick="startClickGame()">ابدأ اللعبة</button>
+</div>
+
+<script>
+  let clicks = 0;
+  let timer;
+
+  function countClick() {
+    clicks++;
+    document.getElementById("clicks").textContent = "النتيجة: " + clicks;
+  }
+
+  function startClickGame() {
+    clicks = 0;
+    document.getElementById("clicks").textContent = "النتيجة: 0";
+    document.getElementById("clickBtn").disabled = false;
+
+    timer = setTimeout(() => {
+      document.getElementById("clickBtn").disabled = true;
+      alert("انتهى الوقت! عدد النقرات: " + clicks);
+    }, 10000);
+  }
+</script>
+
+<div class="card">
+  <h2>حجر ورقة مقص ✊📄✂️</h2>
+  <button onclick="play('حجر')">✊ حجر</button>
+  <button onclick="play('ورقة')">📄 ورقة</button>
+  <button onclick="play('مقص')">✂️ مقص</button>
+  <p id="rpsResult"></p>
+</div>
+
+<script>
+  function play(playerChoice) {
+    const choices = ['حجر', 'ورقة', 'مقص'];
+    const computer = choices[Math.floor(Math.random() * 3)];
+    let result = '';
+
+    if (playerChoice === computer) {
+      result = "تعادل! 🤝";
+    } else if (
+      (playerChoice === 'حجر' && computer === 'مقص') ||
+      (playerChoice === 'ورقة' && computer === 'حجر') ||
+      (playerChoice === 'مقص' && computer === 'ورقة')
+    ) {
+      result = `أنت فزت! 🎉 الكمبيوتر اختار ${computer}`;
+    } else {
+      result = `خسرت 😢 الكمبيوتر اختار ${computer}`;
+    }
+
+    document.getElementById("rpsResult").textContent = result;
+  }
+</script>
+
+<div class="card">
+  <h2>💣 تجنب القنبلة!</h2>
+  <div id="grid" style="display: grid; grid-template-columns: repeat(3, 80px); gap: 10px; margin: 20px auto;"></div>
+  <p id="score">النقاط: 0</p>
+  <button onclick="startBombGame()">ابدأ اللعبة</button>
+</div>
+
+<script>
+  const grid = document.getElementById('grid');
+  const scoreDisplay = document.getElementById('score');
+  let bombIndex = -1;
+  let score = 0;
+  let gameActive = false;
+
+  function createGrid() {
+    grid.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('button');
+      cell.style.width = '80px';
+      cell.style.height = '80px';
+      cell.style.fontSize = '24px';
+      cell.style.cursor = 'pointer';
+      cell.textContent = '?';
+      cell.onclick = () => checkCell(i, cell);
+      grid.appendChild(cell);
+    }
+  }
+
+  function startBombGame() {
+    createGrid();
+    score = 0;
+    gameActive = true;
+    scoreDisplay.textContent = "النقاط: 0";
+    bombIndex = Math.floor(Math.random() * 9); // حدد مكان القنبلة
+  }
+
+  function checkCell(index, cell) {
+    if (!gameActive || cell.disabled) return;
+
+    if (index === bombIndex) {
+      cell.textContent = '💣';
+      cell.style.backgroundColor = 'red';
+      endGame();
+    } else {
+      score++;
+      cell.textContent = '✔️';
+      cell.disabled = true;
+      cell.style.backgroundColor = '#8f8';
+      scoreDisplay.textContent = "النقاط: " + score;
+    }
+  }
+
+  function endGame() {
+    gameActive = false;
+    const cells = grid.children;
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].disabled = true;
+    }
+    alert("💥 خسرت! النقاط: " + score);
+  }
+</script>
+
+</script>
+
+<div class="card">
+  <h2>🎁 صندوق الحظ</h2>
+  <div id="lucky-grid" style="display: grid; grid-template-columns: repeat(3, 80px); gap: 10px; margin: 20px auto;"></div>
+  <p id="lucky-message">اختر 3 صناديق بدون أن تفتح القنبلة!</p>
+  <button onclick="startLuckyGame()">ابدأ اللعبة</button>
+</div>
+
+<script>
+  const luckyGrid = document.getElementById('lucky-grid');
+  const luckyMessage = document.getElementById('lucky-message');
+  let bombBox = -1;
+  let treasureBoxes = [];
+  let openedCount = 0;
+  let gameOver = false;
+
+  function startLuckyGame() {
+    luckyGrid.innerHTML = '';
+    openedCount = 0;
+    gameOver = false;
+    luckyMessage.textContent = "اختر 3 صناديق بدون أن تفتح القنبلة!";
+
+    // حدد مواقع الكنوز والقنبلة
+    const indices = Array.from({ length: 9 }, (_, i) => i);
+    indices.sort(() => Math.random() - 0.5);
+    bombBox = indices[0];
+    treasureBoxes = indices.slice(1, 4);
+
+    // إنشاء الصناديق
+    for (let i = 0; i < 9; i++) {
+      const box = document.createElement('button');
+      box.textContent = "❓";
+      box.style.width = '80px';
+      box.style.height = '80px';
+      box.style.fontSize = '24px';
+      box.style.cursor = 'pointer';
+      box.disabled = false;
+
+      box.onclick = () => openBox(i, box);
+      luckyGrid.appendChild(box);
+    }
+  }
+
+  function openBox(index, box) {
+    if (gameOver || box.disabled) return;
+
+    box.disabled = true;
+
+    if (index === bombBox) {
+      box.textContent = "💣";
+      box.style.backgroundColor = "#f00";
+      luckyMessage.textContent = "💥 خسرت! فتحت القنبلة.";
+      gameOver = true;
+    } else if (treasureBoxes.includes(index)) {
+      box.textContent = "💎";
+      box.style.backgroundColor = "#0f0";
+      openedCount++;
+      if (openedCount === 3) {
+        luckyMessage.textContent = "🎉 مبروك! وجدت الكنوز وتجنبت القنبلة.";
+        gameOver = true;
+      }
+    } else {
+      box.textContent = "📦";
+      box.style.backgroundColor = "#ccc";
+      openedCount++;
+    }
+  }
+</script>
+
+
+<div class="card">
+    <div class="card" style="text-align: center; padding: 20px; max-width: 400px; margin: 0 auto; background: #fff3; border-radius: 16px; box-shadow: 0 0 10px #0003;">
+  <h2 style="color: #333;">❌⭕ لعبة إكس-أو ضد الكمبيوتر</h2>
+  <div id="xo-grid" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; justify-content: center; margin: 20px auto;"></div>
+  <p id="xo-status" style="font-weight: bold; color: #444;">دورك: ❌</p>
+  <button onclick="startXOGame()" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">🔄 ابدأ من جديد</button>
+<script>
+  const xoGrid = document.getElementById('xo-grid');
+  const xoStatus = document.getElementById('xo-status');
+  let xoBoard = [];
+  let xoGameOver = false;
+
+  function startXOGame() {
+    xoBoard = Array(9).fill('');
+    xoGameOver = false;
+    xoStatus.textContent = "دورك: ❌";
+    xoGrid.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('button');
+      cell.style.width = '80px';
+      cell.style.height = '80px';
+      cell.style.fontSize = '24px';
+      cell.style.cursor = 'pointer';
+      cell.onclick = () => playerMove(i, cell);
+      xoGrid.appendChild(cell);
+    }
+  }
+
+  function playerMove(index, cell) {
+    if (xoBoard[index] !== '' || xoGameOver) return;
+    xoBoard[index] = '❌';
+    cell.textContent = '❌';
+    if (checkWinner('❌')) {
+      xoStatus.textContent = "🎉 فزت على الكمبيوتر!";
+      xoGameOver = true;
+      return;
+    }
+    if (xoBoard.every(cell => cell !== '')) {
+      xoStatus.textContent = "تعادل!";
+      xoGameOver = true;
+      return;
+    }
+    xoStatus.textContent = "دور الكمبيوتر: ⭕";
+    setTimeout(computerMove, 500);
+  }
+
+  function computerMove() {
+    if (xoGameOver) return;
+    const emptyIndices = xoBoard.map((val, i) => val === '' ? i : null).filter(v => v !== null);
+    const choice = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+    xoBoard[choice] = '⭕';
+    xoGrid.children[choice].textContent = '⭕';
+
+    if (checkWinner('⭕')) {
+      xoStatus.textContent = "💻 الكمبيوتر فاز!";
+      xoGameOver = true;
+      return;
+    }
+    if (xoBoard.every(cell => cell !== '')) {
+      xoStatus.textContent = "تعادل!";
+      xoGameOver = true;
+      return;
+    }
+    xoStatus.textContent = "دورك: ❌";
+  }
+
+  function checkWinner(symbol) {
+    const winPatterns = [
+      [0,1,2], [3,4,5], [6,7,8],
+      [0,3,6], [1,4,7], [2,5,8],
+      [0,4,8], [2,4,6]
+    ];
+    return winPatterns.some(pattern =>
+      pattern.every(index => xoBoard[index] === symbol)
+    );
+  }
+</script>
+
+
 </html>
 <head>
   <meta charset="UTF-8">
   <title>موقعي</title>
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8D0P1NWYC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -362,36 +810,9 @@
     gtag('config', 'G-G8D0P1NWYC');
   </script>
 
-  <link rel="stylesheet" href="n.css">
-  <link src="n.java"></script>
+   <script src="index.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* باقي التنسيق زي ما هو */
-    <!-- باقي محتوى موقعك -->
 
-<script>
-  const ua = navigator.userAgent;
-
-  let deviceType = "Unknown Device";
-
-  if (/android/i.test(ua)) {
-    deviceType = "Android Phone";
-  } else if (/iPhone|iPad|iPod/i.test(ua)) {
-    deviceType = "Apple Device";
-  } else if (/windows/i.test(ua)) {
-    deviceType = "Windows PC";
-  } else if (/macintosh/i.test(ua)) {
-    deviceType = "Mac";
-  }
-
-  // طباعة نوع الجهاز في الكونسول
-  console.log("Device Type: " + deviceType);
-
-  // أو عرضه في الموقع
-  document.body.insertAdjacentHTML("beforeend", `<p style="text-align:center;color:#ffc400;">نوع الجهاز: ${deviceType}</p>`);
-</script>
-
-</body>
-</html>
 
 
