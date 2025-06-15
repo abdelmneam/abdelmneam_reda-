@@ -367,4 +367,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* باقي التنسيق زي ما هو */
+    <!-- باقي محتوى موقعك -->
+
+<script>
+  const ua = navigator.userAgent;
+
+  let deviceType = "Unknown Device";
+
+  if (/android/i.test(ua)) {
+    deviceType = "Android Phone";
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    deviceType = "Apple Device";
+  } else if (/windows/i.test(ua)) {
+    deviceType = "Windows PC";
+  } else if (/macintosh/i.test(ua)) {
+    deviceType = "Mac";
+  }
+
+  // طباعة نوع الجهاز في الكونسول
+  console.log("Device Type: " + deviceType);
+
+  // أو عرضه في الموقع
+  document.body.insertAdjacentHTML("beforeend", `<p style="text-align:center;color:#ffc400;">نوع الجهاز: ${deviceType}</p>`);
+</script>
+
+</body>
+</html>
+
 
