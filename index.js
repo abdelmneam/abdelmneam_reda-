@@ -56,3 +56,22 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+<script>
+  const ua = navigator.userAgent;
+
+  let deviceType = "Unknown Device";
+
+  if (/android/i.test(ua)) {
+    deviceType = "Android Phone";
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    deviceType = "Apple Device";
+  } else if (/windows/i.test(ua)) {
+    deviceType = "Windows PC";
+  } else if (/macintosh/i.test(ua)) {
+    deviceType = "Mac";
+  }
+
+  console.log("Device Type: " + deviceType);
+  // لو عايز تظهره في الصفحة
+  document.body.insertAdjacentHTML("beforeend", `<p>نوع الجهاز: ${deviceType}</p>`);
+</script>
