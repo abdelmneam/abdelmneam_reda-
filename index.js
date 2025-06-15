@@ -56,22 +56,65 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
-<script>
-  const ua = navigator.userAgent;
+function computerMove() {
+  if (xoGameOver) return;
 
-  let deviceType = "Unknown Device";
+  let bestScore = -Infinity;
+  let move;
 
-  if (/android/i.test(ua)) {
-    deviceType = "Android Phone";
-  } else if (/iPhone|iPad|iPod/i.test(ua)) {
-    deviceType = "Apple Device";
-  } else if (/windows/i.test(ua)) {
-    deviceType = "Windows PC";
-  } else if (/macintosh/i.test(ua)) {
-    deviceType = "Mac";
+  for (let i = 0; i < 9; i++) {
+    if (xoBoard[i] === '') {
+      xoBoard[i] = '⭕';
+      let score = minimax(xoBoard, 0, false);
+      xoBoard[i] = '';
+      if (score > bestScore) {
+        bestScore = score;
+        move = i;
+      }
+    }
   }
 
-  console.log("Device Type: " + deviceType);
-  // لو عايز تظهره في الصفحة
-  document.body.insertAdjacentHTML("beforeend", `<p>نوع الجهاز: ${deviceType}</p>`);
-</script>
+  xoBoard[move] = '⭕';
+  xoGrid.children[move].textContent = '⭕';
+
+  if (checkWinner('⭕')) {
+    xoStatus.textContent = "💻 الكمبيوتر فاز!";
+    xoGameOver = true;
+    return;
+  }
+  if (xoBoard.every(cell => cell !== '')) {
+    xoStatus.textContent = "تعادل!";
+    xoGameOver = true;
+    return;
+  }
+  xoStatus.textContent = "دورك: ❌";
+}
+function minimax(board, depth, isMaximizing) {
+  if (checkWinner('⭕')) return 1;
+  if (checkWinner('❌')) return -1;
+  if (board.every(cell => cell !== '')) return 0;
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (board[i] === '') {
+        board[i] = '⭕';
+        let score = minimax(board, depth + 1, false);
+        board[i] = '';
+        bestScore = Math.max(score, bestScore);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (board[i] === '') {
+        board[i] = '❌';
+        let score = minimax(board, depth + 1, true);
+        board[i] = '';
+        bestScore = Math.min(score, bestScore);
+      }
+    }
+    return bestScore;
+  }
+}
